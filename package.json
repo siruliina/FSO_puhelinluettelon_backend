@@ -7,7 +7,7 @@
     "start": "node index.js",
     "dev": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build:ui": "del build && cd ../FullStackOpen/osa2/puhelinluettelo && npm run build && cp -r build ../../../FSO_puhelinluettelon_backend",
+    "build:ui": "rmdir /S build && cd ..\\FullStackOpen\\osa2\\puhelinluettelo && npm run build && xcopy build ..\\..\\..\\FSO_puhelinluettelon_backend\\build",
     "deploy:full": "npm run build:ui && git add . && git commit -m uibuild && git push"
   },
   "author": "Siru-Liina Karlin",
