@@ -37,7 +37,7 @@ app.use(morgan(':method :url :status :res[content-length] - :response-time ms :b
 ]*/
 
 app.get('/info', async (req, res) => {
-  const dateNow = new Date();
+  const dateNow = new Date()
   const persons = await Person.find({})
 
   res.send(
@@ -66,34 +66,31 @@ app.get('/api/persons/:id', (request, response, next) => {
 
 app.delete('/api/persons/:id', (request, response, next) => {
   Person.findByIdAndRemove(request.params.id)
-    .then(result => {
-      response.status(204).end()
-    })
+    .then(response.status(204).end())
     .catch(error => next(error))
 })
-  
+
 app.post('/api/persons', async (request, response, next) => {
   const body = request.body
 
   if (!body.name || !body.number) {
-    return response.status(400).json({ 
-      error: 'name or number missing' 
+    return response.status(400).json({
+      error: 'name or number missing'
     })
   }
 
   const personFound = await Person.find({}).then(persons => {return persons.find(person => person.name === body.name)})
-  
-    
+
   if (personFound) {
-    return response.status(409).json({ 
-        error: 'name must be unique' 
+    return response.status(409).json({
+      error: 'name must be unique'
     })
   } else {
     const person = new Person({
       name: body.name,
       number: body.number
     })
-  
+
     person.save()
       .then(savedPerson => {
         response.json(savedPerson)
@@ -111,7 +108,7 @@ app.put('/api/persons/:id', (request, response, next) => {
   }
 
   Person.findByIdAndUpdate(
-    request.params.id, 
+    request.params.id,
     person,
     { new: true, runValidators: true, context: 'query' })
     .then(updatedPerson => {
